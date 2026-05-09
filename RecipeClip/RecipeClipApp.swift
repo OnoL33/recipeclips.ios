@@ -2,7 +2,7 @@
 //  RecipeClipApp.swift
 //  RecipeClip
 //
-//  Created by Ono Lee on 09.05.26.
+//  This is the app entry point. It sets up SwiftData storage.
 //
 
 import SwiftUI
@@ -10,23 +10,11 @@ import SwiftData
 
 @main
 struct RecipeClipApp: App {
-    var sharedModelContainer: ModelContainer = {
-        let schema = Schema([
-            Item.self,
-        ])
-        let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
-
-        do {
-            return try ModelContainer(for: schema, configurations: [modelConfiguration])
-        } catch {
-            fatalError("Could not create ModelContainer: \(error)")
-        }
-    }()
-
     var body: some Scene {
         WindowGroup {
             ContentView()
         }
-        .modelContainer(sharedModelContainer)
+        // This line sets up the SwiftData database for our Recipe model
+        .modelContainer(for: Recipe.self)
     }
 }
