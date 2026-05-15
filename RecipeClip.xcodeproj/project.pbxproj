@@ -17,6 +17,7 @@
 		5ABF4A272FAFE75D00AD367D /* CookingModeView.swift .swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABF4A262FAFE75D00AD367D /* CookingModeView.swift .swift */; };
 		5ABF4A292FAFE77500AD367D /* IngredientScalingHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABF4A282FAFE77500AD367D /* IngredientScalingHelper.swift */; };
 		5ABF4A2B2FAFE78800AD367D /* SampleRecipes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5ABF4A2A2FAFE78800AD367D /* SampleRecipes.swift */; };
+		5ABF4A4A2FB0931E00AD367D /* RecipeClipShareExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5ABF4A402FB0931E00AD367D /* RecipeClipShareExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -34,7 +35,28 @@
 			remoteGlobalIDString = 5ABF49EB2FAFDF1800AD367D;
 			remoteInfo = RecipeClip;
 		};
+		5ABF4A482FB0931E00AD367D /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 5ABF49E42FAFDF1800AD367D /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5ABF4A3F2FB0931E00AD367D;
+			remoteInfo = RecipeClipShareExtension;
+		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5ABF4A4B2FB0931E00AD367D /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				5ABF4A4A2FB0931E00AD367D /* RecipeClipShareExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		5ABF49EC2FAFDF1800AD367D /* RecipeClip.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipeClip.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -50,6 +72,7 @@
 		5ABF4A262FAFE75D00AD367D /* CookingModeView.swift .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CookingModeView.swift .swift"; sourceTree = "<group>"; };
 		5ABF4A282FAFE77500AD367D /* IngredientScalingHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientScalingHelper.swift; sourceTree = "<group>"; };
 		5ABF4A2A2FAFE78800AD367D /* SampleRecipes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SampleRecipes.swift; sourceTree = "<group>"; };
+		5ABF4A402FB0931E00AD367D /* RecipeClipShareExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = RecipeClipShareExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -59,6 +82,13 @@
 				Info.plist,
 			);
 			target = 5ABF49EB2FAFDF1800AD367D /* RecipeClip */;
+		};
+		5ABF4A4F2FB0931E00AD367D /* Exceptions for "RecipeClipShareExtension" folder in "RecipeClipShareExtension" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5ABF4A3F2FB0931E00AD367D /* RecipeClipShareExtension */;
 		};
 /* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
@@ -79,6 +109,14 @@
 		5ABF4A082FAFDF1B00AD367D /* RecipeClipUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = RecipeClipUITests;
+			sourceTree = "<group>";
+		};
+		5ABF4A412FB0931E00AD367D /* RecipeClipShareExtension */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				5ABF4A4F2FB0931E00AD367D /* Exceptions for "RecipeClipShareExtension" folder in "RecipeClipShareExtension" target */,
+			);
+			path = RecipeClipShareExtension;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -105,6 +143,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5ABF4A3D2FB0931E00AD367D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -124,6 +169,7 @@
 				5ABF49EE2FAFDF1800AD367D /* RecipeClip */,
 				5ABF49FE2FAFDF1B00AD367D /* RecipeClipTests */,
 				5ABF4A082FAFDF1B00AD367D /* RecipeClipUITests */,
+				5ABF4A412FB0931E00AD367D /* RecipeClipShareExtension */,
 				5ABF49ED2FAFDF1800AD367D /* Products */,
 			);
 			sourceTree = "<group>";
@@ -134,6 +180,7 @@
 				5ABF49EC2FAFDF1800AD367D /* RecipeClip.app */,
 				5ABF49FB2FAFDF1B00AD367D /* RecipeClipTests.xctest */,
 				5ABF4A052FAFDF1B00AD367D /* RecipeClipUITests.xctest */,
+				5ABF4A402FB0931E00AD367D /* RecipeClipShareExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -148,10 +195,12 @@
 				5ABF49E82FAFDF1800AD367D /* Sources */,
 				5ABF49E92FAFDF1800AD367D /* Frameworks */,
 				5ABF49EA2FAFDF1800AD367D /* Resources */,
+				5ABF4A4B2FB0931E00AD367D /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				5ABF4A492FB0931E00AD367D /* PBXTargetDependency */,
 			);
 			fileSystemSynchronizedGroups = (
 				5ABF49EE2FAFDF1800AD367D /* RecipeClip */,
@@ -209,6 +258,28 @@
 			productReference = 5ABF4A052FAFDF1B00AD367D /* RecipeClipUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
+		5ABF4A3F2FB0931E00AD367D /* RecipeClipShareExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5ABF4A4E2FB0931E00AD367D /* Build configuration list for PBXNativeTarget "RecipeClipShareExtension" */;
+			buildPhases = (
+				5ABF4A3C2FB0931E00AD367D /* Sources */,
+				5ABF4A3D2FB0931E00AD367D /* Frameworks */,
+				5ABF4A3E2FB0931E00AD367D /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5ABF4A412FB0931E00AD367D /* RecipeClipShareExtension */,
+			);
+			name = RecipeClipShareExtension;
+			packageProductDependencies = (
+			);
+			productName = RecipeClipShareExtension;
+			productReference = 5ABF4A402FB0931E00AD367D /* RecipeClipShareExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -230,6 +301,9 @@
 						CreatedOnToolsVersion = 26.1.1;
 						TestTargetID = 5ABF49EB2FAFDF1800AD367D;
 					};
+					5ABF4A3F2FB0931E00AD367D = {
+						CreatedOnToolsVersion = 26.1.1;
+					};
 				};
 			};
 			buildConfigurationList = 5ABF49E72FAFDF1800AD367D /* Build configuration list for PBXProject "RecipeClip" */;
@@ -249,6 +323,7 @@
 				5ABF49EB2FAFDF1800AD367D /* RecipeClip */,
 				5ABF49FA2FAFDF1B00AD367D /* RecipeClipTests */,
 				5ABF4A042FAFDF1B00AD367D /* RecipeClipUITests */,
+				5ABF4A3F2FB0931E00AD367D /* RecipeClipShareExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -269,6 +344,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		5ABF4A032FAFDF1B00AD367D /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5ABF4A3E2FB0931E00AD367D /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -309,6 +391,13 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		5ABF4A3C2FB0931E00AD367D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -321,6 +410,11 @@
 			isa = PBXTargetDependency;
 			target = 5ABF49EB2FAFDF1800AD367D /* RecipeClip */;
 			targetProxy = 5ABF4A062FAFDF1B00AD367D /* PBXContainerItemProxy */;
+		};
+		5ABF4A492FB0931E00AD367D /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5ABF4A3F2FB0931E00AD367D /* RecipeClipShareExtension */;
+			targetProxy = 5ABF4A482FB0931E00AD367D /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -446,9 +540,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RecipeClip/RecipeClip.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9M2T6927WB;
+				DEVELOPMENT_TEAM = AFY5UB59F7;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -470,7 +565,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = OnoLee.RecipeClip;
+				PRODUCT_BUNDLE_IDENTIFIER = com.onolee.RecipeClip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -491,9 +586,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = RecipeClip/RecipeClip.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 9M2T6927WB;
+				DEVELOPMENT_TEAM = AFY5UB59F7;
 				ENABLE_APP_SANDBOX = YES;
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
@@ -515,7 +611,7 @@
 				"LD_RUNPATH_SEARCH_PATHS[sdk=macosx*]" = "@executable_path/../Frameworks";
 				MACOSX_DEPLOYMENT_TARGET = 26.1;
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = OnoLee.RecipeClip;
+				PRODUCT_BUNDLE_IDENTIFIER = com.onolee.RecipeClip;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				REGISTER_APP_GROUPS = YES;
 				SDKROOT = auto;
@@ -633,6 +729,69 @@
 			};
 			name = Release;
 		};
+		5ABF4A4C2FB0931E00AD367D /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = RecipeClipShareExtension/RecipeClipShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AFY5UB59F7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RecipeClipShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RecipeClipShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.onolee.RecipeClip.RecipeClipShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5ABF4A4D2FB0931E00AD367D /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = RecipeClipShareExtension/RecipeClipShareExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = AFY5UB59F7;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = RecipeClipShareExtension/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = RecipeClipShareExtension;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 26.1;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.onolee.RecipeClip.RecipeClipShareExtension;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				STRING_CATALOG_GENERATE_SYMBOLS = YES;
+				SWIFT_APPROACHABLE_CONCURRENCY = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -668,6 +827,15 @@
 			buildConfigurations = (
 				5ABF4A162FAFDF1B00AD367D /* Debug */,
 				5ABF4A172FAFDF1B00AD367D /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5ABF4A4E2FB0931E00AD367D /* Build configuration list for PBXNativeTarget "RecipeClipShareExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5ABF4A4C2FB0931E00AD367D /* Debug */,
+				5ABF4A4D2FB0931E00AD367D /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

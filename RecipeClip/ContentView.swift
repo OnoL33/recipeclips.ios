@@ -2,50 +2,36 @@
 //  ContentView.swift
 //  RecipeClip
 //
-//  The Home screen. Shows the recipe list, search bar, collection filters,
-//  and an Import Recipe button.
+//  Home screen. Handles opening the Import screen automatically
+//  when the app is launched from the Share Extension.
 //
 
 import SwiftUI
 import SwiftData
 
 struct ContentView: View {
-    // Access the SwiftData database
     @Environment(\.modelContext) private var modelContext
-
-    // Load all recipes from the database, sorted newest first
     @Query(sort: \Recipe.createdAt, order: .reverse) private var recipes: [Recipe]
 
-    // Search text typed by the user
     @State private var searchText = ""
-
-    // Which collection chip is selected (nil = show all)
     @State private var selectedCollection: String? = nil
-
-    // Whether to show the Import Recipe sheet
     @State private var showingImport = false
 
-    // Whether we've loaded sample data (stored in UserDefaults so we only do it once)
-    @State private var hasLoadedSamples = false
+    // Passed in from RecipeClipApp when Share Extension opens the app
+    @Binding var pendingURL: String
+    @Binding var pendingText: String
+    @Binding var showImportFromShare: Bool
 
     var body: some View {
         NavigationStack {
             ZStack {
-                // Warm cream background
-                Color("BackgroundCream")
-                    .ignoresSafeArea()
+                Color("BackgroundCream").ignoresSafeArea()
 
                 VStack(spacing: 0) {
-                    // ── Header ──────────────────────────────────────────
                     headerView
-
-                    // ── Search bar ──────────────────────────────────────
                     searchBar
-
-                    // ── Collection filter chips ─────────────────────────
                     collectionChips
 
-                    // ── Recipe list or empty state ──────────────────────
                     if filteredRecipes.isEmpty {
                         emptyState
                     } else {
@@ -53,13 +39,38 @@ struct ContentView: View {
                     }
                 }
             }
-            // Show the Import screen as a sheet (slides up from the bottom)
+            // Normal import (user taps + button)
             .sheet(isPresented: $showingImport) {
                 ImportRecipeView()
             }
-            // Load sample data the first time the app opens
+            // Share Extension import (pre-filled with URL and text)
+            .sheet(isPresented: $showImportFromShare, onDismiss: {
+                // Clear pending data after sheet is dismissed
+                pendingURL = ""
+                pendingText = ""
+            }) {
+                // Capture values at the moment the sheet opens
+                let urlToImport = pendingURL
+                let textToImport = pendingText
+                ImportRecipeView(
+                    initialURL: urlToImport,
+                    initialText: textToImport
+                )
+            }
             .onAppear {
                 loadSamplesIfNeeded()
+            }
+            // Every time the app comes to the foreground, check if
+            // there's a pending URL waiting to be imported
+            .onReceive(NotificationCenter.default.publisher(
+                for: UIApplication.didBecomeActiveNotification)
+            ) { _ in
+                DispatchQueue.main.asyncAfter(deadline: .now() + 0.8) {
+                    print("👀 ContentView checking pendingURL: '\(pendingURL)'")
+                    if !pendingURL.isEmpty && !showImportFromShare {
+                        showImportFromShare = true
+                    }
+                }
             }
         }
     }
@@ -77,7 +88,6 @@ struct ContentView: View {
                     .foregroundColor(.secondary)
             }
             Spacer()
-            // Import button
             Button(action: { showingImport = true }) {
                 Label("Import", systemImage: "plus.circle.fill")
                     .font(.system(size: 16, weight: .semibold))
@@ -111,7 +121,6 @@ struct ContentView: View {
 
     // MARK: - Collection chips
 
-    // Get unique collection names from all saved recipes
     var allCollections: [String] {
         let names = recipes.compactMap { $0.collectionName.isEmpty ? nil : $0.collectionName }
         return Array(Set(names)).sorted()
@@ -120,11 +129,9 @@ struct ContentView: View {
     var collectionChips: some View {
         ScrollView(.horizontal, showsIndicators: false) {
             HStack(spacing: 8) {
-                // "All" chip
                 collectionChip(label: "All", isSelected: selectedCollection == nil) {
                     selectedCollection = nil
                 }
-                // One chip per collection
                 ForEach(allCollections, id: \.self) { name in
                     collectionChip(label: name, isSelected: selectedCollection == name) {
                         selectedCollection = (selectedCollection == name) ? nil : name
@@ -156,7 +163,6 @@ struct ContentView: View {
 
     // MARK: - Recipe list
 
-    // Filter recipes based on search text and selected collection
     var filteredRecipes: [Recipe] {
         recipes.filter { recipe in
             let matchesSearch = searchText.isEmpty ||
@@ -212,12 +218,10 @@ struct ContentView: View {
 
     // MARK: - Sample data
 
-    // Load sample recipes the first time the app opens
     func loadSamplesIfNeeded() {
         let key = "hasLoadedSampleRecipes"
         guard !UserDefaults.standard.bool(forKey: key) else { return }
-        let samples = SampleRecipes.all()
-        for recipe in samples {
+        for recipe in SampleRecipes.all() {
             modelContext.insert(recipe)
         }
         UserDefaults.standard.set(true, forKey: key)
@@ -231,7 +235,6 @@ struct RecipeCard: View {
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
-            // Title row
             HStack {
                 Text(recipe.title)
                     .font(.system(size: 17, weight: .semibold))
@@ -242,8 +245,6 @@ struct RecipeCard: View {
                 Text(recipe.platformIcon)
                     .font(.title3)
             }
-
-            // Meta row: collection, time, servings
             HStack(spacing: 12) {
                 if !recipe.collectionName.isEmpty {
                     Label(recipe.collectionName, systemImage: "folder")
@@ -259,8 +260,6 @@ struct RecipeCard: View {
                     .font(.caption)
                     .foregroundColor(.secondary)
             }
-
-            // Tags
             if !recipe.tagsArray.isEmpty {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6) {
@@ -284,7 +283,13 @@ struct RecipeCard: View {
     }
 }
 
+// MARK: - Preview
+
 #Preview {
-    ContentView()
-        .modelContainer(for: Recipe.self, inMemory: true)
+    ContentView(
+        pendingURL: .constant(""),
+        pendingText: .constant(""),
+        showImportFromShare: .constant(false)
+    )
+    .modelContainer(for: Recipe.self, inMemory: true)
 }

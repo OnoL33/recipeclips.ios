@@ -2,35 +2,25 @@
 //  ImportRecipeView.swift
 //  RecipeClip
 //
-//  The Import screen where the user pastes a recipe URL.
-//  After tapping Analyze, it calls the backend and navigates to the Review screen.
+//  Import screen. Can be opened manually or pre-filled from the Share Extension.
 //
 
 import SwiftUI
 
 struct ImportRecipeView: View {
-    // To close this sheet when done
     @Environment(\.dismiss) private var dismiss
 
-    // The URL the user types or pastes
-    @State private var urlText = ""
+    // These can be pre-filled when coming from the Share Extension
+    // They default to empty when opened manually
+    var initialURL: String = ""
+    var initialText: String = ""
 
-    // Optional caption/text that was shared (from the Share Extension)
-    @State private var sharedText = ""
-
-    // Which collection to save this recipe in
-    @State private var collectionName = ""
-
-    // Whether we're currently analyzing (showing loading state)
+    @State private var urlText: String = ""
+    @State private var sharedText: String = ""
+    @State private var collectionName: String = ""
     @State private var isAnalyzing = false
-
-    // If an error happens, store the message here
     @State private var errorMessage: String? = nil
-
-    // When we have a result from the API, store it here and navigate to review
     @State private var recipeDraft: RecipeDraft? = nil
-
-    // Whether to navigate to the review screen
     @State private var navigateToReview = false
 
     var body: some View {
@@ -41,7 +31,6 @@ struct ImportRecipeView: View {
                 ScrollView {
                     VStack(alignment: .leading, spacing: 24) {
 
-                        // ── Title ───────────────────────────────────────
                         VStack(alignment: .leading, spacing: 4) {
                             Text("Import Recipe")
                                 .font(.system(size: 26, weight: .bold, design: .rounded))
@@ -50,7 +39,20 @@ struct ImportRecipeView: View {
                                 .foregroundColor(.secondary)
                         }
 
-                        // ── URL field ───────────────────────────────────
+                        // Show a banner if we came from the Share Extension
+                        if !initialURL.isEmpty || !initialText.isEmpty {
+                            HStack(spacing: 10) {
+                                Image(systemName: "checkmark.circle.fill")
+                                    .foregroundColor(.green)
+                                Text("Link received from share sheet!")
+                                    .font(.subheadline.bold())
+                                    .foregroundColor(.green)
+                            }
+                            .padding(12)
+                            .background(Color.green.opacity(0.1))
+                            .clipShape(RoundedRectangle(cornerRadius: 10))
+                        }
+
                         fieldSection(title: "Post URL", icon: "link") {
                             TextField("https://www.tiktok.com/...", text: $urlText)
                                 .autocorrectionDisabled()
@@ -58,18 +60,16 @@ struct ImportRecipeView: View {
                                 .keyboardType(.URL)
                         }
 
-                        // ── Shared text (optional) ──────────────────────
                         fieldSection(title: "Caption / Text (optional)", icon: "text.quote") {
-                            TextField("Paste the post caption here if you have it...", text: $sharedText, axis: .vertical)
+                            TextField("Paste the post caption here if you have it...",
+                                      text: $sharedText, axis: .vertical)
                                 .lineLimit(3...6)
                         }
 
-                        // ── Collection picker ───────────────────────────
                         fieldSection(title: "Save to Collection", icon: "folder") {
                             TextField("e.g. Dinner Ideas, Breakfast...", text: $collectionName)
                         }
 
-                        // ── Error message ───────────────────────────────
                         if let error = errorMessage {
                             HStack {
                                 Image(systemName: "exclamationmark.circle")
@@ -82,12 +82,10 @@ struct ImportRecipeView: View {
                             .clipShape(RoundedRectangle(cornerRadius: 10))
                         }
 
-                        // ── Analyze button ──────────────────────────────
                         Button(action: analyzeRecipe) {
                             HStack {
                                 if isAnalyzing {
-                                    ProgressView()
-                                        .tint(.white)
+                                    ProgressView().tint(.white)
                                     Text("Analyzing recipe...")
                                         .font(.headline)
                                         .foregroundColor(.white)
@@ -101,20 +99,19 @@ struct ImportRecipeView: View {
                             .frame(maxWidth: .infinity)
                             .padding(.vertical, 16)
                             .background(
-                                urlText.isEmpty
+                                urlText.isEmpty && sharedText.isEmpty
                                 ? Color.gray.opacity(0.4)
                                 : Color("AccentOrange")
                             )
                             .clipShape(RoundedRectangle(cornerRadius: 14))
                         }
-                        .disabled(urlText.isEmpty || isAnalyzing)
+                        .disabled((urlText.isEmpty && sharedText.isEmpty) || isAnalyzing)
 
                         Spacer(minLength: 40)
                     }
                     .padding(24)
                 }
 
-                // Hidden NavigationLink that fires when we have a draft
                 NavigationLink(
                     destination: RecipeReviewView(draft: recipeDraft ?? RecipeDraft()),
                     isActive: $navigateToReview
@@ -125,6 +122,12 @@ struct ImportRecipeView: View {
                 ToolbarItem(placement: .navigationBarLeading) {
                     Button("Cancel") { dismiss() }
                 }
+            }
+            // Pre-fill fields when the view first appears
+            .onAppear {
+                if urlText.isEmpty { urlText = initialURL }
+                if sharedText.isEmpty { sharedText = initialText }
+                print("📋 ImportRecipeView appeared — initialURL: '\(initialURL)'")
             }
         }
     }
@@ -144,22 +147,19 @@ struct ImportRecipeView: View {
         }
     }
 
-    // MARK: - Analyze action
+    // MARK: - Analyze
 
     func analyzeRecipe() {
-        // Clear any previous error
         errorMessage = nil
         isAnalyzing = true
 
         Task {
             do {
-                // Call the API service (placeholder in Part 1, real in Part 3)
                 let draft = try await RecipeAPIService.analyzeRecipe(
                     sourceURL: urlText,
                     sharedText: sharedText,
                     collectionName: collectionName
                 )
-                // Store the result and navigate to the review screen
                 await MainActor.run {
                     recipeDraft = draft
                     isAnalyzing = false
@@ -168,7 +168,7 @@ struct ImportRecipeView: View {
             } catch {
                 await MainActor.run {
                     isAnalyzing = false
-                    errorMessage = "Could not analyze the recipe. Please check your internet connection and try again.\n\nError: \(error.localizedDescription)"
+                    errorMessage = error.localizedDescription
                 }
             }
         }

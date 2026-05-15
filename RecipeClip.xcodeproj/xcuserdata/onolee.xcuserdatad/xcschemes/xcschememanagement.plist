@@ -7,7 +7,25 @@
 		<key>RecipeClip.xcscheme_^#shared#^_</key>
 		<dict>
 			<key>orderHint</key>
+			<integer>1</integer>
+		</dict>
+		<key>RecipeClipShareExtension.xcscheme_^#shared#^_</key>
+		<dict>
+			<key>orderHint</key>
 			<integer>0</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>5ABF49EB2FAFDF1800AD367D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5ABF4A3F2FB0931E00AD367D</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
